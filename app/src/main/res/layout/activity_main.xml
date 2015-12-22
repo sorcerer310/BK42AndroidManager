@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}">
+
+
+    <info.hoang8f.android.segmented.SegmentedGroup
+        xmlns:segmentedgroup="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/segmented"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        segmentedgroup:sc_corner_radius="10dp"
+
+            >
+        <RadioButton android:id="@+id/button21"
+                     android:layout_weight="1"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:text="卧龙的考验"
+                     style="@style/RadioButton"
+                />
+        <RadioButton android:id="@+id/button22"
+                     android:layout_weight="1"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:text="八阵图"
+                     style="@style/RadioButton"
+                />
+        <RadioButton android:id="@+id/button23"
+                     android:layout_weight="1"
+                     android:layout_width="fill_parent"
+                     android:layout_height="wrap_content"
+                     android:text="凶宅"
+                     style="@style/RadioButton"
+                     />
+    </info.hoang8f.android.segmented.SegmentedGroup>
+    <GridView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:id="@+id/gridView"
+            android:layout_below="@+id/segmented"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:numColumns="4"/>
+
+
+</RelativeLayout>
