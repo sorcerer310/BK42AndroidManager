@@ -5,8 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.GridView;
-import com.bsu.bk42.com.bsu.bk42.data.GridUnitAdapter;
-import com.bsu.bk42.com.bsu.bk42.data.GridUnitData;
+import com.bsu.bk42.data.GridUnitAdapter;
+import com.bsu.bk42.data.GridUnitData;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
+        segmentedGroupInit();
         gridViewInit();
     }
 
@@ -33,7 +33,10 @@ public class MainActivity extends Activity {
      */
     private void segmentedGroupInit(){
         SegmentedGroup sg = (SegmentedGroup) findViewById(R.id.segmented);
-//        sg.setBackgroundColor(Color.rgb());
+        sg.setBackgroundColor(Color.argb(255,79,132,183));                              //背景色
+        sg.setTintColor(Color.argb(255,97,173,237));                                    //未选中文字颜色
+        System.out.println("============="+sg.getChildAt(0).getClass());
+//        sg.set
     }
 
     /**
