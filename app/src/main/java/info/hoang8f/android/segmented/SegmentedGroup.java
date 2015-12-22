@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import com.bsu.bk42.R;
+import com.bsu.bk42androidmanager.R;
 
 
 public class SegmentedGroup extends RadioGroup {

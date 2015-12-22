@@ -1,12 +1,13 @@
-package com.bsu.bk42;
+package com.bsu.bk42androidmanager;
 
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.widget.GridView;
-import com.bsu.bk42.data.GridUnitAdapter;
-import com.bsu.bk42.data.GridUnitData;
+import android.widget.Toast;
+import com.bsu.bk42androidmanager.data.GridUnitAdapter;
+import com.bsu.bk42androidmanager.data.GridUnitData;
 import info.hoang8f.android.segmented.SegmentedGroup;
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //用来处理android.os.NetworkOnMainThreadException异常
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
+//        if (android.os.Build.VERSION.SDK_INT > 9) {
+//            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//            StrictMode.setThreadPolicy(policy);
+//        }
         segmentedGroupInit();
         gridViewInit();
     }
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
         SegmentedGroup sg = (SegmentedGroup) findViewById(R.id.segmented);
         sg.setBackgroundColor(Color.argb(255,79,132,183));                              //背景色
         sg.setTintColor(Color.argb(255,97,173,237));                                    //未选中文字颜色
-        System.out.println("============="+sg.getChildAt(0).getClass());
+        System.out.println("=============" + sg.getChildAt(0).getClass());
 //        sg.set
     }
 

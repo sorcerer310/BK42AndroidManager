@@ -1,4 +1,4 @@
-package com.bsu.bk42;
+package com.bsu.bk42androidmanager;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
