@@ -13,11 +13,11 @@ import java.io.IOException;
 public class HttpTask extends AsyncTask<String,Integer,String> {
     private HttpUtils httputils = null;                                         //执行http请求的工具类
     private String urlparams = null;                                            //要执行的参数
-    private Context context = null;
-    public HttpTask(HttpUtils hu,String up,Context c){
+    private OnTaskThrowExceptionListener listener = null;                       //监听任务异常的监听器
+    public HttpTask(HttpUtils hu,String up,OnTaskThrowExceptionListener l){
         httputils = hu;
         urlparams = up;
-        context = c;
+        listener = l;
     }
 
     @Override
@@ -25,9 +25,25 @@ public class HttpTask extends AsyncTask<String,Integer,String> {
         try {
             httputils.sendCommand(urlparams);
         } catch (IOException e) {
-            Toast.makeText(context,"连接服务器失败:"+e.getMessage(),Toast.LENGTH_LONG);
+            if(listener!=null)
+                listener.taskException(e);
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * 设置监听任务异常的监听器
+     * @param l 监听器对象
+     */
+    public void setOnTaskThrowExceptionListener(OnTaskThrowExceptionListener l){
+        listener = l;
+    }
+
+    /**
+     * 监听请求任务的异常
+     */
+    public interface OnTaskThrowExceptionListener{
+        public void taskException(Exception e);
     }
 }

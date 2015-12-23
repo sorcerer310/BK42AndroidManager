@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 //        }
 
         setContentView(R.layout.activity_main);
+
         gridView = (GridView) this.findViewById(R.id.gridView);
 
         initAdapter0();
@@ -36,6 +37,7 @@ public class MainActivity extends Activity {
 
         segmentedGroupInit();
 //        gridViewInit();
+
     }
 
     /**

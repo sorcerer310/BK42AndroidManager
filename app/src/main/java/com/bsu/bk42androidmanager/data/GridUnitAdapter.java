@@ -32,9 +32,20 @@ import java.util.Map;
 public class GridUnitAdapter extends SimpleAdapter {
     private Context context = null;
     private static HttpUtils http = null;
+    private Handler uihandler = null;
     public GridUnitAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         this.context = context;
+
+        uihandler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                Toast.makeText(GridUnitAdapter.this.context,"连接服务器失败:"+msg.getData().getString("exception")
+                        ,Toast.LENGTH_LONG).show();
+            }
+        };
+
         try {
             http = new HttpUtils("http://192.168.1.112:8080/pgc2/plc_send_serial?");
         } catch (IOException e) {
@@ -68,7 +79,17 @@ public class GridUnitAdapter extends SimpleAdapter {
                             urlparam =  data.get("button").up;
                         ib.setAlpha(1.0f);
                     }
-                    new HttpTask(http,urlparam,GridUnitAdapter.this.context).execute();
+                    //执行http请求任务，每个HttpTask对象只能执行一项任务
+                    new HttpTask(http, urlparam, new HttpTask.OnTaskThrowExceptionListener() {
+                        @Override
+                        public void taskException(Exception e) {
+                            Message msg = new Message();
+                            Bundle b = new Bundle();
+                            b.putString("exception",e.getMessage());
+                            msg.setData(b);
+                            uihandler.sendMessage(msg);
+                        }
+                    }).execute();
                 }
                 return false;
             }
