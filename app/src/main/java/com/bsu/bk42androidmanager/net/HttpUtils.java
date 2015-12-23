@@ -1,5 +1,7 @@
 package com.bsu.bk42androidmanager.net;
 
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,13 +12,11 @@ import java.net.URL;
  * http帮助累
  * Created by fengchong on 15/12/20.
  */
-public class HttpUtils {
+public class HttpUtils  {
     private URL url = null;
     private HttpURLConnection urlConn = null;
     private String urlpath = "";
     public HttpUtils(String u) throws IOException {
-//        url = new URL(u);
-//        urlConn = (HttpURLConnection)url.openConnection();
         urlpath = u;
     }
 
@@ -31,6 +31,7 @@ public class HttpUtils {
         System.out.println(urlpath+param);
         url = new URL(urlpath+param);
         urlConn = (HttpURLConnection)url.openConnection();
+        urlConn.setConnectTimeout(2000);
         InputStreamReader isr = new InputStreamReader(urlConn.getInputStream());
         BufferedReader buffer = new BufferedReader(isr);
         StringBuffer sb = new StringBuffer();
@@ -44,4 +45,5 @@ public class HttpUtils {
         isr.close();
         urlConn.disconnect();
     }
+
 }

@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bsu.bk42androidmanager.R;
+import com.bsu.bk42androidmanager.net.HttpTask;
 import com.bsu.bk42androidmanager.net.HttpUtils;
 
 import java.io.IOException;
@@ -31,7 +32,6 @@ import java.util.Map;
 public class GridUnitAdapter extends SimpleAdapter {
     private Context context = null;
     private static HttpUtils http = null;
-    private Thread httpthread = null;
     public GridUnitAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         this.context = context;
@@ -41,20 +41,6 @@ public class GridUnitAdapter extends SimpleAdapter {
             e.printStackTrace();
         }
     }
-
-    private Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            try {
-                http.sendCommand(msg.getData().getString("Cmd"));
-            }catch (Exception e) {
-                Toast.makeText(GridUnitAdapter.this.context, "连接服务器失败", Toast.LENGTH_LONG).show();
-                e.printStackTrace();
-            }
-
-        }
-    };
 
     private Runnable runnable = null;
     @Override
@@ -74,36 +60,19 @@ public class GridUnitAdapter extends SimpleAdapter {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if(motionEvent.getAction()==MotionEvent.ACTION_DOWN || motionEvent.getAction()==MotionEvent.ACTION_UP ||
                     motionEvent.getAction()==MotionEvent.ACTION_CANCEL ) {
-                    final Message msg = new Message();
-                    Bundle b = new Bundle();
+                    String urlparam = null;
                     if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                        if (handler != null)
-                            b.putString("Cmd", data.get("button").up);
+                            urlparam =  data.get("button").down;
                         ib.setAlpha(0.5f);
                     } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
-                        if (handler != null)
-                            b.putString("Cmd", data.get("button").down);
+                            urlparam =  data.get("button").up;
                         ib.setAlpha(1.0f);
                     }
-                    msg.setData(b);
-
-                    runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            if (handler != null) {
-                                handler.sendMessage(msg);
-                            }
-                        }
-                    };
-
-
-                    httpthread = new Thread(runnable);
-                    httpthread.start();
+                    new HttpTask(http,urlparam,GridUnitAdapter.this.context).execute();
                 }
                 return false;
             }
         });
-
         return convertView;
     }
 
