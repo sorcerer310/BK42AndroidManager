@@ -20,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId "com.bsu.bk42"
-        minSdkVersion 9
+        minSdkVersion 10
         targetSdkVersion 20
         versionCode 1
         versionName "1.0"
@@ -42,5 +42,10 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'],exclude:'android-support-v4.jar')
 //    compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.android.support:appcompat-v7:20.+'
+    compile 'com.android.support:recyclerview-v7:22.1.1'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'cn.bingoogolapple:bga-refreshlayout:1.1.2@aar'
+    compile 'com.squareup.okio:okio:1.6.0'
+    compile 'com.squareup.okhttp:okhttp:2.7.1'
 
 }

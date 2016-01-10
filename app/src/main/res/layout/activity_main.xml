@@ -37,15 +37,23 @@
                      style="@style/RadioButton"
                      />
     </info.hoang8f.android.segmented.SegmentedGroup>
-    <GridView
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:id="@+id/gridView"
-            android:layout_below="@+id/segmented"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:numColumns="4"/>
+    <cn.bingoogolapple.refreshlayout.BGARefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/rl_modulename_refresh"
+        android:layout_below="@id/segmented"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+            >
+        <GridView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:id="@+id/gridView"
+                android:layout_below="@+id/segmented"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="10dp"
+                android:numColumns="4"/>
+    </cn.bingoogolapple.refreshlayout.BGARefreshLayout>
+
 
 
 </RelativeLayout>
