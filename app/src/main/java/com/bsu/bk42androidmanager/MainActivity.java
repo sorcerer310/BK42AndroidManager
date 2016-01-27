@@ -88,7 +88,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
      */
     private void initAdapter0(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
-        datas.add(makeHashMapData(R.drawable.dump_is_not_ready,"敲鼓状态","plc_state_query?point=dump_is_ready",""));
+        datas.add(makeHashMapData(R.drawable.dump_is_not_ready,"敲鼓状态","plc_state_query?point=dumpIsReady",""));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"复位","plc_send_serial?type=click&area=w&address1=000500&val1=01&readOrWrite=write",""));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁1","plc_send_serial?type=click&area=w&address1=000501&val1=01&readOrWrite=write",""));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁2","plc_send_serial?type=click&area=w&address1=000502&val1=01&readOrWrite=write",""));
@@ -151,7 +151,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 final GridUnitData gud = data.get("button");
                 final ImageButton ib_dump = ib;
                 final String ppath = path;
-                System.out.println("click");
+                System.out.println("----------->"+ppath);
                 new AsyncTask<Void,Void,Boolean>(){
                     private String httpresult = "";
                     private Boolean retval = false;
@@ -159,6 +159,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                     protected Boolean doInBackground(Void... voids) {
                         Request request = new Request.Builder().url(url + ppath).build();
                         Call call = httpclient.newCall(request);
+
 //                        call.enqueue(new Callback() {
 //                            @Override
 //                            public void onFailure(Request request, IOException e) {
@@ -181,7 +182,9 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
 //                            }
 //                        });
                         try {
+                            System.out.println("--------->url:"+request.urlString());
                             Response res = call.execute();
+//                            System.out.println("--------->res:"+res.message());
                             retval = true;
                         } catch (IOException e) {
                             retval = false;
@@ -228,13 +231,13 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         HashMap<String,GridUnitData> data = (HashMap<String, GridUnitData>) adapter.getItem(0);
         final GridUnitData gud = data.get("button");
 
-        ViewGroup vg = (ViewGroup) adapter.getView(0, null, null);
-        View v = vg.getChildAt(0);
-        final ImageButton ib_dump;
-        if(v instanceof ImageButton)
-            ib_dump = (ImageButton) v;
-        else
-            ib_dump = null;
+//        ViewGroup vg = (ViewGroup) adapter.getView(0, null, null);
+//        View v = vg.getChildAt(0);
+//        final ImageButton ib_dump;
+//        if(v instanceof ImageButton)
+//            ib_dump = (ImageButton) v;
+//        else
+//            ib_dump = null;
 
         /**
          *  okhttp操作返回的数据
@@ -255,8 +258,9 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 Call call = httpclient.newCall(request);
                 try {
                     Response res = call.execute();
-                    res.body().string();
-                    return new AsyncTaskReturnData(true,res.body().string());
+                    ResponseBody rb = res.body();
+                    String rbs = rb.string();
+                    return new AsyncTaskReturnData(true,rbs);
 
                 } catch (IOException e) {
                     return new AsyncTaskReturnData(false,e.getMessage());

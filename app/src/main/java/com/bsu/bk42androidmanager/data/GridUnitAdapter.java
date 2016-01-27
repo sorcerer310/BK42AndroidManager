@@ -55,6 +55,9 @@ public class GridUnitAdapter extends SimpleAdapter {
                         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                             urlparam = data.get("button").down;
                             ib.setAlpha(0.5f);
+                            //请求http数据
+                            if(listener!=null)
+                                listener.request(urlparam,ib,data);
                         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
                             urlparam = data.get("button").up;
                             ib.setAlpha(1.0f);
