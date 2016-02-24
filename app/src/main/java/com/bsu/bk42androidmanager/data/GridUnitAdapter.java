@@ -23,10 +23,12 @@ import java.util.Map;
 public class GridUnitAdapter extends SimpleAdapter {
     private Context context = null;
     private OnHttpRequestListener listener = null;
+    private List<? extends Map<String,?>> allDatas = null;
 
     public GridUnitAdapter(Context context, List<? extends Map<String, ?>> data, int resource, String[] from, int[] to) {
         super(context, data, resource, from, to);
         this.context = context;
+        allDatas = data;
     }
 
     @Override
@@ -36,15 +38,20 @@ public class GridUnitAdapter extends SimpleAdapter {
         final HashMap<String,GridUnitData> data = (HashMap<String, GridUnitData>) getItem(position);
         //设置textview属性
         TextView textView = (TextView) convertView.findViewById(R.id.textView);
-        textView.setText(data.get("button").text);
-        if(data.get("button").text.equals("敲鼓状态")){
+        textView.setText(data.get("unit").text);
+//        if(data.get("unit").text.equals("敲鼓状态")){
+        GridUnitData gud = data.get("unit");
+        //当类型为显示状态
+        if(gud.type== GridUnitData.Type.state){
             ImageButton ib = (ImageButton) convertView.findViewById(R.id.imageButton);
 //            ib.setBackgroundResource(R.drawable.dump_is_not_ready);
-            ib.setBackgroundResource(data.get("button").imgresources);
-        }else {
+            ib.setBackgroundResource(data.get("unit").imgresources);
+        }
+        //当类型为按钮
+        else if(gud.type == GridUnitData.Type.button){
             //设置ImageButton属性
             final ImageButton ib = (ImageButton) convertView.findViewById(R.id.imageButton);
-            ib.setBackgroundResource(data.get("button").imgresources);
+            ib.setBackgroundResource(data.get("unit").imgresources);
             ib.setOnTouchListener(new OnTouchListener() {
                 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
                 @Override
@@ -53,13 +60,13 @@ public class GridUnitAdapter extends SimpleAdapter {
                             motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
                         String urlparam = null;
                         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            urlparam = data.get("button").down;
+                            urlparam = data.get("unit").down;
                             ib.setAlpha(0.5f);
                             //请求http数据
                             if(listener!=null)
                                 listener.request(urlparam,ib,data);
                         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
-                            urlparam = data.get("button").up;
+                            urlparam = data.get("unit").up;
                             ib.setAlpha(1.0f);
                             //请求http数据
                             if(listener!=null)
@@ -71,6 +78,14 @@ public class GridUnitAdapter extends SimpleAdapter {
             });
         }
         return convertView;
+    }
+
+    /**
+     * 获得数据源所有数据
+     * @return
+     */
+    public List<? extends Map<String, ?>> getAllDatas() {
+        return allDatas;
     }
 
     /**

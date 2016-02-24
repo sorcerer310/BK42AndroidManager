@@ -5,15 +5,25 @@ package com.bsu.bk42androidmanager.data;
  * Created by fengchong on 15/12/19.
  */
 public class GridUnitData {
-    public int imgresources = -1;                                                //图标路径
+    public enum Type {button,state};
+    public int imgresources = -1;                                              //图标路径
     public String text = "";                                                   //显示文本
     public String down = "";                                                   //按下发送的url
     public String up = "";                                                     //抬起发送的url
+    public GridUnitData.Type type = Type.button;                               //该元素类型，默认为按钮
 
     public GridUnitData(int ip,String txt,String d,String u){
         imgresources = ip;
         text = txt;
         down= d;
         up = u;
+    }
+
+    public GridUnitData(int ip,String txt,String d,String u,GridUnitData.Type gt){
+        imgresources = ip;
+        text = txt;
+        down= d;
+        up = u;
+        type = gt;
     }
 }
