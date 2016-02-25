@@ -28,7 +28,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     private OkHttpClient httpclient = new OkHttpClient();
     private String url_sanguo = "http://192.168.1.112:8080/pgc2/";
     private String url_sanguo2 = "http://192.168.1.113:8080/pgc2/";
-    private String url_xiongzhai = "http://192.168.199.202:8080/pgc2/";
+    private String url_xiongzhai = "http://192.168.1.111:8080/pgc2/";
     private String url_current = url_sanguo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,13 +174,13 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     }
     private void initAdapter2(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
+        datas.add(makeHashMapDataState(R.drawable.dump_is_not_ready, "浇花状态", "plc_state_query?point=i0.11", true));
         datas.add(makeHashMapDataWithType(R.drawable.dump_is_not_ready, "敲门状态", "plc_state_query?point=i0.09", "", GridUnitData.Type.state));
-        datas.add(makeHashMapDataWithType(R.drawable.dump_is_not_ready, "浇花状态", "plc_state_query?point=i0.11", "", GridUnitData.Type.state));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", CmdMaker.clickWWrite("000100","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "脚踏灯亮", CmdMaker.clickWWrite("000505","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "通风口开", CmdMaker.clickWWrite("00010A","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "梳妆台锁", CmdMaker.clickWWrite("000600","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "娃娃区锁", CmdMaker.clickWWrite("000700","01"),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "梳妆台锁", CmdMaker.clickWWrite("000700","01"),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "娃娃区锁", CmdMaker.clickWWrite("000600","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "投影仪亮", CmdMaker.clickWWrite("00010C","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "屏风门开", CmdMaker.clickWWrite("00010B","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"床抽屉回",CmdMaker.hbWWrite("000000","01","000200","00")
@@ -311,9 +311,17 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                         super.onPostExecute(d);
                         if(d.success){
                             if(d.retstring.equals("true"))
-                                fgud.imgresources = R.drawable.dump_is_ready;
+                                //如果取反标识为true，设置未准备好标识
+                                if(fgud.backTypeState)
+                                    fgud.imgresources = R.drawable.dump_is_not_ready;
+                                //取反标识为false，设置准备好标识
+                                else
+                                    fgud.imgresources = R.drawable.dump_is_ready;
                             else
-                                fgud.imgresources = R.drawable.dump_is_not_ready;
+                                if(fgud.backTypeState)
+                                    fgud.imgresources = R.drawable.dump_is_ready;
+                                else
+                                    fgud.imgresources = R.drawable.dump_is_not_ready;
                         }else {
                             Toast.makeText(MainActivity.this, "连接服务器失败:" + d.retstring
                                     , Toast.LENGTH_LONG).show();
@@ -358,7 +366,21 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
      */
     private HashMap<String,GridUnitData> makeHashMapDataWithType(int ip,String text,String down,String up,GridUnitData.Type gt){
         HashMap<String,GridUnitData> data = new HashMap<String, GridUnitData>();
-        data.put("unit",new GridUnitData(ip,text,down,up,gt));
+        data.put("unit",new GridUnitData(ip,text,down,up,gt,false));
+        return data;
+    }
+
+    /**
+     * 用来生成状态按钮的代理数据
+     * @param ip        图片资源路径
+     * @param text      标签名
+     * @param down      按下发送的url
+     * @param backState 状态是否取反，如果为false，当服务器返回true为正常绿色状态；如果为true，当服务器返回true为不正常红色状态
+     * @return
+     */
+    private HashMap<String,GridUnitData> makeHashMapDataState(int ip,String text,String down,boolean backState){
+        HashMap<String,GridUnitData> data = new HashMap<String,GridUnitData>();
+        data.put("unit",new GridUnitData(ip,text,down,"", GridUnitData.Type.state,backState));
         return data;
     }
 }

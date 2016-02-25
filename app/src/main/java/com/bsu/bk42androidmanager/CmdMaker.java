@@ -57,6 +57,22 @@ public class CmdMaker {
                 .append("&val1=").append(value)
                 .append("&readOrWrite=write");
         return sb.toString();
+
+    }
+
+    /**
+     * 当h桥类持续按功能恢复后执行的操作
+     * @param address
+     * @param value
+     * @return
+     */
+    public static String nomalOWrite(String address,String value){
+        StringBuffer sb = new StringBuffer();
+        sb.append(action).append("?type=nomal&area=o&address1=")
+                .append(address)
+                .append("&val1=").append(value)
+                .append("&readOrWrite=write");
+        return sb.toString();
     }
 
     public static void main(String args[]){

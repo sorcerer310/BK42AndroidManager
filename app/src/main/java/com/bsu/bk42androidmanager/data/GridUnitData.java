@@ -11,6 +11,7 @@ public class GridUnitData {
     public String down = "";                                                   //按下发送的url
     public String up = "";                                                     //抬起发送的url
     public GridUnitData.Type type = Type.button;                               //该元素类型，默认为按钮
+    public boolean backTypeState = false;                                      //当数据为state类型是否取反值
 
     public GridUnitData(int ip,String txt,String d,String u){
         imgresources = ip;
@@ -19,11 +20,12 @@ public class GridUnitData {
         up = u;
     }
 
-    public GridUnitData(int ip,String txt,String d,String u,GridUnitData.Type gt){
+    public GridUnitData(int ip,String txt,String d,String u,GridUnitData.Type gt,boolean back){
         imgresources = ip;
         text = txt;
         down= d;
         up = u;
         type = gt;
+        backTypeState = back;
     }
 }
