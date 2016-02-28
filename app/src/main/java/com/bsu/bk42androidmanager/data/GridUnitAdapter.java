@@ -42,13 +42,12 @@ public class GridUnitAdapter extends SimpleAdapter {
 //        if(data.get("unit").text.equals("敲鼓状态")){
         GridUnitData gud = data.get("unit");
         //当类型为显示状态
-        if(gud.type== GridUnitData.Type.state){
-            ImageButton ib = (ImageButton) convertView.findViewById(R.id.imageButton);
-//            ib.setBackgroundResource(R.drawable.dump_is_not_ready);
-            ib.setBackgroundResource(data.get("unit").imgresources);
-        }
-        //当类型为按钮
-        else if(gud.type == GridUnitData.Type.button){
+//        if(gud.type== GridUnitData.Type.state){
+//            ImageButton ib = (ImageButton) convertView.findViewById(R.id.imageButton);
+//            ib.setBackgroundResource(data.get("unit").imgresources);
+//        }
+//        //当类型为按钮
+//        else if(gud.type == GridUnitData.Type.button){
             //设置ImageButton属性
             final ImageButton ib = (ImageButton) convertView.findViewById(R.id.imageButton);
             ib.setBackgroundResource(data.get("unit").imgresources);
@@ -63,20 +62,20 @@ public class GridUnitAdapter extends SimpleAdapter {
                             urlparam = data.get("unit").down;
                             ib.setAlpha(0.5f);
                             //请求http数据
-                            if(listener!=null)
+                            if(listener!=null && !urlparam.equals(""))
                                 listener.request(urlparam,ib,data);
                         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP || motionEvent.getAction() == MotionEvent.ACTION_CANCEL) {
                             urlparam = data.get("unit").up;
                             ib.setAlpha(1.0f);
                             //请求http数据
-                            if(listener!=null)
+                            if(listener!=null && !urlparam.equals(""))
                                 listener.request(urlparam,ib,data);
                         }
                     }
                     return false;
                 }
             });
-        }
+//        }
         return convertView;
     }
 

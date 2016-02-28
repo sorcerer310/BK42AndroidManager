@@ -183,6 +183,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         datas.add(makeHashMapData(R.drawable.bt_icon1, "娃娃区锁", CmdMaker.clickWWrite("000600","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "投影仪亮", CmdMaker.clickWWrite("00010C","01"),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "屏风门开", CmdMaker.clickWWrite("00010B","01"),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "四画灯灭", CmdMaker.clickWWrite("000600","01"),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "女鬼音效", CmdMaker.clickWWrite("",""),""));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"床抽屉回",CmdMaker.hbWWrite("000000","01","000200","00")
                 ,CmdMaker.nomalWWrite("000000","00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"床抽屉出",CmdMaker.hbWWrite("000200","01","000000","00")
@@ -216,32 +218,59 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 final ImageButton ib_dump = ib;
                 final String ppath = path;
                 System.out.println("----------->"+ppath);
-                new AsyncTask<Void,Void,Boolean>(){
+                new AsyncTask<Void,Void,String>(){
                     private String httpresult = "";
-                    private Boolean retval = false;
+                    private String retval = null;
                     @Override
-                    protected Boolean doInBackground(Void... voids) {
+                    protected String doInBackground(Void... voids) {
                         Request request = new Request.Builder().url(url_current + ppath).build();
                         Call call = httpclient.newCall(request);
                         try {
-                            System.out.println("--------->url:"+request.urlString());
+//                            System.out.println("--------->url:"+request.urlString());
                             Response res = call.execute();
-//                            System.out.println("--------->res:"+res.message());
-                            retval = true;
+//                            System.out.println("--------->res:"+res.body().string());
+                            retval = res.body().string();
                         } catch (IOException e) {
-                            retval = false;
-                            httpresult = e.getMessage();
-                            System.out.println("-------------"+e.getMessage());
+                            e.printStackTrace();
+//                            httpresult = e.getMessage();
+//                            System.out.println("-------------"+e.getMessage());
+                            retval = null;
                         }
                         return retval;
                     }
 
                     @Override
-                    protected void onPostExecute(Boolean b) {
-                        super.onPostExecute(b);
-                        if(!b){
+                    protected void onPostExecute(String r) {
+                        super.onPostExecute(r);
+                        if(r==null){
                             Toast.makeText(MainActivity.this,"连接服务器失败:"+httpresult
                                     ,Toast.LENGTH_LONG).show();
+                        }else{
+                            //如果当前的按钮为状态显示时
+                            if(gud.type==GridUnitData.Type.state){
+                                if(r.equals("true")){
+                                    if(gud.backTypeState){
+                                        gud.imgresources = R.drawable.dump_is_not_ready;
+                                    }else{
+                                        gud.imgresources = R.drawable.dump_is_ready;
+                                    }
+                                }else if(r.equals("false")){
+                                    if(gud.backTypeState){
+                                        gud.imgresources = R.drawable.dump_is_ready;
+                                    }else{
+                                        gud.imgresources = R.drawable.dump_is_not_ready;
+                                    }
+                                }else{
+                                    Toast.makeText(MainActivity.this, "获得状态数据失败。"
+                                            , Toast.LENGTH_LONG).show();
+                                    gud.imgresources = R.drawable.dump_is_not_ready;
+
+                                }
+                            }
+                            //如果当前的按钮为功能开关时
+                            else{
+
+                            }
                         }
                     }
                 }.execute();
