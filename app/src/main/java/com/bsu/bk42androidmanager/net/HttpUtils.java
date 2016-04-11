@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * http帮助累
+ * http帮助类
  * Created by fengchong on 15/12/20.
  */
 public class HttpUtils  {

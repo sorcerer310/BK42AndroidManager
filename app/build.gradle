@@ -36,9 +36,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'],exclude:'android-support-v4.jar')
 //    compile 'info.hoang8f:android-segmented:1.0.6'
     compile 'com.android.support:appcompat-v7:20.+'
@@ -47,5 +49,12 @@ dependencies {
     compile 'cn.bingoogolapple:bga-refreshlayout:1.1.2@aar'
     compile 'com.squareup.okio:okio:1.6.0'
     compile 'com.squareup.okhttp:okhttp:2.7.1'
+    androidTestCompile 'junit:junit:4.7'
+//    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
 
+android {
+    packagingOptions {
+        exclude 'LICENSE.txt'
+    }
 }

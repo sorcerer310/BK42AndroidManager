@@ -43,8 +43,6 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         initAdapter2();
 
         segmentedGroupInit();
-//        gridViewInit();
-
     }
 
     /**
@@ -93,19 +91,19 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
     }
 
     /**
-     * 初始化第一个界面的按钮数据代理
+     * 初始化卧龙的考验界面
      */
     private void initAdapter0(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
         datas.add(makeHashMapDataWithType(R.drawable.dump_is_not_ready, "敲鼓状态", "plc_state_query?point=dumpIsReady", "", GridUnitData.Type.state));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"复位","plc_send_serial?type=click&area=w&address1=000500&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁1","plc_send_serial?type=click&area=w&address1=000501&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁2","plc_send_serial?type=click&area=w&address1=000502&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"船舱锁","plc_send_serial?type=click&area=w&address1=000503&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"祭坛锁","plc_send_serial?type=click&area=w&address1=000504&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"大道锁","plc_send_serial?type=click&area=w&address1=000505&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"华容道锁","plc_send_serial?type=click&area=w&address1=000506&val1=01&readOrWrite=write",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"通关锁","plc_send_serial?type=click&area=w&address1=000507&val1=01&readOrWrite=write",""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"复位","",CmdMaker.clickWWrite("000500","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁1","",CmdMaker.clickWWrite("000501","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"通道锁2","",CmdMaker.clickWWrite("000502","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"船舱锁","",CmdMaker.clickWWrite("000503","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"祭坛锁","",CmdMaker.clickWWrite("000504","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"大道锁","",CmdMaker.clickWWrite("000505","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"华容道锁","",CmdMaker.clickWWrite("000506","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"通关锁","",CmdMaker.clickWWrite("000507","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"星阵门开"
                 ,"plc_send_serial?type=h-bridge&area=w&address1=000600&address2=000700&val1=00&val2=01&readOrWrite=write"
                 ,"plc_send_serial?type=nomal&area=w&address1=000700&val1=00&readOrWrite=write"));
@@ -130,63 +128,68 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                 new String[]{"unit"},
                 new int[]{R.id.textView});
     }
+
+    /**
+     * 初始化八阵图界面
+     */
     private void initAdapter1(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", CmdMaker.clickWWrite("000500","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "续命灯开", CmdMaker.clickWWrite("000501","01"), ""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"续命灯加","",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"续命灯复","",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀门1",CmdMaker.clickWWrite("000700","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀门2",CmdMaker.clickWWrite("000708","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀通道",CmdMaker.clickWWrite("000701","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀武器",CmdMaker.clickWWrite("000702","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎门",CmdMaker.clickWWrite("000703","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎匕首","",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎铁链",CmdMaker.clickWWrite("000704","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车1",CmdMaker.clickWWrite("000705","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车2",CmdMaker.clickWWrite("000706","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎武器",CmdMaker.clickWWrite("000709","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武门",CmdMaker.clickWWrite("000707","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武按钮",CmdMaker.clickWWrite("000509","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武电容复位","",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙沙盘",CmdMaker.clickWWrite("000711","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙通道",CmdMaker.clickWWrite("000712","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙按钮复位","",""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙武器",CmdMaker.clickWWrite("000715","01"),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", "",CmdMaker.clickWWrite("000500","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"大门开","",CmdMaker.clickWWrite("00070D","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "续命灯开", "",CmdMaker.clickWWrite("000501","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"续命灯复","",CmdMaker.clickWWrite("000601","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀门开","",CmdMaker.clickWWrite("000700", "01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀通道","",CmdMaker.clickWWrite("000701","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀武器","",CmdMaker.clickWWrite("000702","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀通关","",CmdMaker.clickWWrite("000708","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎门","",CmdMaker.clickWWrite("000703","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎铁链","",CmdMaker.clickWWrite("000704","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"车零件1","",CmdMaker.clickWWrite("000705","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"车零件2","",CmdMaker.clickWWrite("000706","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎武器","",CmdMaker.clickWWrite("000709","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武门","",CmdMaker.clickWWrite("000707","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武酒坛","",CmdMaker.clickWWrite("000509","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武武器","",CmdMaker.clickWWrite("00070A","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙沙盘","",CmdMaker.clickWWrite("00070B","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙通道","",CmdMaker.clickWWrite("00070C","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙武器","",CmdMaker.clickWWrite("00070F","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"大厅印升",CmdMaker.hbWWrite("000505","01","000605","00")
-                ,CmdMaker.nomalWWrite("000505","00")));
+                ,CmdMaker.nomalWWrite("000505", "00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"大厅印降",CmdMaker.hbWWrite("000605","01","000505","00")
                 ,CmdMaker.nomalWWrite("000605","00")));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车进",CmdMaker.hbWWrite("000603","01","000503","00")
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车退",CmdMaker.hbWWrite("000603","01","000503","00")
                 ,CmdMaker.nomalWWrite("000603","00")));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车退",CmdMaker.hbWWrite("000503","01","000603","00")
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎车进",CmdMaker.hbWWrite("000503","01","000603","00")
                 ,CmdMaker.nomalWWrite("000503","00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武桥升",CmdMaker.hbWWrite("000604","01","000504","00")
                 ,CmdMaker.nomalWWrite("000604","00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武桥降",CmdMaker.hbWWrite("000504","01","000604","00")
                 ,CmdMaker.nomalWWrite("000504","00")));
 
-//        datas.add(makeHashMapData(R.drawable.bt_icon1,"八阵图","",""));
-
         adapter1 = new GridUnitAdapter(this,datas,R.layout.grid_view_cell,
                 new String[]{"unit"},
                 new int[]{R.id.textView});
     }
+
+    /**
+     * 凶宅
+     */
     private void initAdapter2(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
         datas.add(makeHashMapDataState(R.drawable.dump_is_not_ready, "浇花状态", "plc_state_query?point=i0.11", true));
         datas.add(makeHashMapDataWithType(R.drawable.dump_is_not_ready, "敲门状态", "plc_state_query?point=i0.09", "", GridUnitData.Type.state));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", CmdMaker.clickWWrite("000100","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "脚踏灯亮", CmdMaker.clickWWrite("000505","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "通风口开", CmdMaker.clickWWrite("00010A","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "梳妆台锁", CmdMaker.clickWWrite("000700","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "娃娃区锁", CmdMaker.clickWWrite("000600","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "投影仪亮", CmdMaker.clickWWrite("00010C","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "屏风门开", CmdMaker.clickWWrite("00010B","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "四画灯灭", CmdMaker.clickWWrite("000600","01"),""));
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "女鬼音效", CmdMaker.clickWWrite("",""),""));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", "",CmdMaker.clickWWrite("000100","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "脚踏灯亮", "",CmdMaker.clickWWrite("000505", "01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "通风口开", "",CmdMaker.clickWWrite("00010A","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "梳妆台锁", "",CmdMaker.clickWWrite("000700","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "娃娃区锁", "",CmdMaker.clickWWrite("000600","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "投影仪亮", "",CmdMaker.clickWWrite("00010C","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "屏风门开", "",CmdMaker.clickWWrite("00010B","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "四画灯灭", "",CmdMaker.clickWWrite("000601","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "掉画上电", "",CmdMaker.clickWWrite("000602","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "迷宫音效", "",CmdMaker.clickWWrite("000800","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"床抽屉回",CmdMaker.hbWWrite("000000","01","000200","00")
-                ,CmdMaker.nomalWWrite("000000","00")));
+                ,CmdMaker.nomalWWrite("000000", "00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"床抽屉出",CmdMaker.hbWWrite("000200","01","000000","00")
                 ,CmdMaker.nomalWWrite("000200","00")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"结婚照开",CmdMaker.hbWWrite("000201","01","000001","00")
@@ -226,14 +229,10 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                         Request request = new Request.Builder().url(url_current + ppath).build();
                         Call call = httpclient.newCall(request);
                         try {
-//                            System.out.println("--------->url:"+request.urlString());
                             Response res = call.execute();
-//                            System.out.println("--------->res:"+res.body().string());
                             retval = res.body().string();
                         } catch (IOException e) {
                             e.printStackTrace();
-//                            httpresult = e.getMessage();
-//                            System.out.println("-------------"+e.getMessage());
                             retval = null;
                         }
                         return retval;
