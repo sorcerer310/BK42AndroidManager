@@ -27,7 +27,8 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
 
     private OkHttpClient httpclient = new OkHttpClient();
     private String url_sanguo = "http://192.168.1.112:8080/pgc2/";
-    private String url_sanguo2 = "http://192.168.1.113:8080/pgc2/";
+//    private String url_sanguo2 = "http://192.168.1.113:8080/pgc2/";
+    private String url_sanguo2 = "http://192.168.199.137:8080/pgc2/";
     private String url_xiongzhai = "http://192.168.1.111:8080/pgc2/";
     private String url_current = url_sanguo;
     @Override
@@ -134,10 +135,12 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
      */
     private void initAdapter1(){
         ArrayList<HashMap<String,GridUnitData>> datas = new ArrayList<HashMap<String,GridUnitData>>();
-        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", "",CmdMaker.clickWWrite("000500","01")));
+//        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", "",CmdMaker.clickWWrite("000500","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1, "复位", CmdMaker.clickWWrite("000500","01"),CmdMaker.clickWWrite("00050A","01")));
+        datas.add(makeHashMapDataWithType(R.drawable.bt_icon1, "七星灯", "plc_leftlife", "", GridUnitData.Type.number));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"大门开","",CmdMaker.clickWWrite("00070D","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1, "续命灯开", "",CmdMaker.clickWWrite("000501","01")));
-        datas.add(makeHashMapData(R.drawable.bt_icon1,"续命灯复","",CmdMaker.clickWWrite("000601","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"命灯复位","",CmdMaker.clickWWrite("000601","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀门开","",CmdMaker.clickWWrite("000700", "01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀通道","",CmdMaker.clickWWrite("000701","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"朱雀武器","",CmdMaker.clickWWrite("000702","01")));
@@ -148,6 +151,7 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
         datas.add(makeHashMapData(R.drawable.bt_icon1,"车零件2","",CmdMaker.clickWWrite("000706","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"白虎武器","",CmdMaker.clickWWrite("000709","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武门","",CmdMaker.clickWWrite("000707","01")));
+        datas.add(makeHashMapData(R.drawable.bt_icon1,"分贝通关","",CmdMaker.clickWWrite("000408","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武酒坛","",CmdMaker.clickWWrite("000509","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"玄武武器","",CmdMaker.clickWWrite("00070A","01")));
         datas.add(makeHashMapData(R.drawable.bt_icon1,"青龙沙盘","",CmdMaker.clickWWrite("00070B","01")));
@@ -265,6 +269,28 @@ public class MainActivity extends Activity implements BGARefreshLayout.BGARefres
                                     gud.imgresources = R.drawable.dump_is_not_ready;
 
                                 }
+                            }
+                            else if(gud.type==GridUnitData.Type.number){
+                                if(r.equals("0")){
+                                    gud.imgresources = R.drawable._0;
+                                }else if(r.equals("1")){
+                                    gud.imgresources = R.drawable._1;
+                                }else if(r.equals("2")){
+                                    gud.imgresources = R.drawable._2;
+                                }else if(r.equals("3")){
+                                    gud.imgresources = R.drawable._3;
+                                }else if(r.equals("4")){
+                                    gud.imgresources = R.drawable._4;
+                                }else if(r.equals("5")){
+                                    gud.imgresources = R.drawable._5;
+                                }else if(r.equals("6")){
+                                    gud.imgresources = R.drawable._6;
+                                }
+//                                MainActivity.this.gridView.deferNotifyDataSetChanged();
+//                                ListViewAdapter adapter =
+//                                MainActivity.this.gridView.getAdapter().
+                                //只有八阵图用了number类型数据,所以只刷新adapter1即可
+                                adapter1.notifyDataSetChanged();
                             }
                             //如果当前的按钮为功能开关时
                             else{

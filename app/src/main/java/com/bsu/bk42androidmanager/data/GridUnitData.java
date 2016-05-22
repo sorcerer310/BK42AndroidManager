@@ -5,7 +5,7 @@ package com.bsu.bk42androidmanager.data;
  * Created by fengchong on 15/12/19.
  */
 public class GridUnitData {
-    public enum Type {button,state};
+    public enum Type {button,state,number};
     public int imgresources = -1;                                              //图标路径
     public String text = "";                                                   //显示文本
     public String down = "";                                                   //按下发送的url
